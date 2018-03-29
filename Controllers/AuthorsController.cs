@@ -10,21 +10,21 @@ namespace Fisher.Bookstore.Api.Controllers
     [Route("api/[controller]")]
     public class AuthorsController : Controller
     {
-       private readonly BookstoreContext db;
+       private readonly Data.BookstoreContext db;
 
-       public AuthorsController(BookstoreContext db)
+       public AuthorsController(Data.BookstoreContext db)
     {
         this.db = db;
 
         if (this.db.Authors.Count() == 0)
         {
             this.db.Authors.Add(new Author { 
-                AuthorId = 1,
+                Id = 1,
                 Name = "Lemony Snicket"
             });
 
             this.db.Authors.Add(new Author {
-                AuthorId = 2,
+                Id = 2,
                 Name = "Stephen King"
             });
 
@@ -58,16 +58,16 @@ namespace Fisher.Bookstore.Api.Controllers
         this.db.Authors.Add(author);
         this.db.SaveChanges();
 
-        return CreatedAtRoute("GetAuthor", new { authorid = author.AuthorId}, author);
+        return CreatedAtRoute("GetAuthor", new { authorid = author.Id}, author);
     }
     [HttpPut("{authorid}")]
     public IActionResult Put(int authorid, [FromBody]Author newAuthor)
     {
-        if(newAuthor == null || newAuthor.AuthorId != authorid)
+        if(newAuthor == null || newAuthor.Id != authorid)
         {
             return BadRequest();
         }
-        var currentAuthor = this.db.Authors.FirstOrDefault(x => x.AuthorId == authorid);
+        var currentAuthor = this.db.Authors.FirstOrDefault(x => x.Id == authorid);
 
         if (currentAuthor == null)
         {
@@ -83,7 +83,7 @@ namespace Fisher.Bookstore.Api.Controllers
     [HttpDelete("{authorid}")]
     public IActionResult Delete(int authorid)
     {
-        var author = this.db.Authors.FirstOrDefault(x => x.AuthorId == authorid);
+        var author = this.db.Authors.FirstOrDefault(x => x.Id == authorid);
 
         if (author == null)
         {
