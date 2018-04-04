@@ -10,9 +10,9 @@ namespace Fisher.Bookstore.Api.Controllers
     [Route("api/[controller]")]
     public class BooksController : Controller
     {
-       private readonly BookstoreContext db;
+       private readonly Data.BookstoreContext db;
 
-       public BooksController(BookstoreContext db)
+       public BooksController(Data.BookstoreContext db)
     {
         this.db = db;
 
